@@ -1,12 +1,12 @@
 package goit.dev.hw5.ui.commands;
 
 import goit.dev.hw5.Controller;
+import goit.dev.hw5.ResponseWrapper;
 import goit.dev.hw5.ui.View;
 
 import java.io.IOException;
-import java.sql.Date;
 
-public class SendArbitraryRequestCommand implements Command {
+public class SendArbitraryGetCommand implements Command {
 
         public static final String NAME = "send";
         public static final String DESC = "Sends arbitrary request";
@@ -14,7 +14,7 @@ public class SendArbitraryRequestCommand implements Command {
         private Controller controller;
         private View view;
 
-        public SendArbitraryRequestCommand(Controller controller, View view) {
+        public SendArbitraryGetCommand(Controller controller, View view) {
             this .controller = controller;
             this.view = view;
         }
@@ -28,8 +28,8 @@ public class SendArbitraryRequestCommand implements Command {
         public void execute() throws IOException {
             view.write("Enter a request");
             String request = view.read();
-            String responce = controller.sendRequest(request);
-            view.write(responce);
+            ResponseWrapper response = controller.sendGet(request);
+            view.write(response.getBody());
         }
 
         @Override

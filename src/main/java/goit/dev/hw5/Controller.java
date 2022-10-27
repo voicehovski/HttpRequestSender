@@ -3,5 +3,6 @@ package goit.dev.hw5;
 import java.io.IOException;
 
 public interface Controller {
-    String sendRequest(String request) throws IOException;
+    ResponseWrapper sendGet(String request) throws IOException;
+    ResponseWrapper sendPost(String request, String filename) throws IOException;
 }

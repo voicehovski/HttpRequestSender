@@ -1,0 +1,45 @@
+package goit.dev.hw5.ui.commands;
+
+import goit.dev.hw5.Controller;
+import goit.dev.hw5.ResponseWrapper;
+import goit.dev.hw5.ui.View;
+
+import java.io.IOException;
+
+public class SendArbitraryPostCommand implements Command{
+    public static final String NAME = "post";
+    public static final String DESC = "Sends arbitrary post request";
+
+    private Controller controller;
+    private View view;
+
+    public SendArbitraryPostCommand(Controller controller, View view) {
+        this .controller = controller;
+        this.view = view;
+    }
+
+    @Override
+    public boolean canExecute(String command) {
+        return NAME.equalsIgnoreCase(command);
+    }
+
+    @Override
+    public void execute() throws IOException {
+        view.write("Enter a request");
+        String request = view.read();
+        view.write("Enter a filename");
+        String filename = view.read();
+        ResponseWrapper response = controller.sendPost(request,filename);
+        view.write(response.getBody());
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
+    @Override
+    public String getDesc() {
+        return DESC;
+    }
+}
