@@ -10,14 +10,14 @@ import goit.dev.hw5.ui.View;
 
 import java.io.IOException;
 
-public class CreatePetCommand implements Command {
-    public static final String NAME = "create pet";
-    public static final String DESC = "Send create pet request";
+public class EditPetCommand implements Command{
+    public static final String NAME = "edit pet";
+    public static final String DESC = "Send update pet request";
 
     private BodyPostController controller;
     private View view;
 
-    public CreatePetCommand(BodyPostController controller, View view) {
+    public EditPetCommand(BodyPostController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -33,10 +33,14 @@ public class CreatePetCommand implements Command {
         String petName = view.read();
         view.write("Enter a status");
         String petStatus = view.read();
-        Pet newPet = new Pet(petName, new String [] {"mydogdy.jpg"});
+        view.write("Enter comma separated image paths");
+        String [] images = view.read().split(",");
+        Pet newPet = new Pet(petName, images);
         newPet.setStatus(petStatus);
-        newPet.setCategory(new Category("dogs"));
-        newPet.addTag(new Tag("big"));
+        view.write("Enter category name");
+        newPet.setCategory(new Category(view.read()));
+        view.write("Enter tag name");
+        newPet.addTag(new Tag(view.read()));
         String json = (new Gson()).toJson(newPet);
         ResponseWrapper response = controller.post(json);
         view.write("Status: " + response.getStatus());

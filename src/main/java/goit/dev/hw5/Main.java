@@ -1,9 +1,6 @@
 package goit.dev.hw5;
 
-import goit.dev.hw5.controller.GetPetByStatusController;
-import goit.dev.hw5.controller.GetPetController;
-import goit.dev.hw5.controller.PostPetController;
-import goit.dev.hw5.controller.SendArbitraryRequestController;
+import goit.dev.hw5.controller.*;
 import goit.dev.hw5.ui.*;
 import goit.dev.hw5.ui.commands.*;
 
@@ -35,6 +32,14 @@ public class Main {
                 ),
                 new GetPetByStatusCommand(
                         new GetPetByStatusController (sendArbitraryRequestController),
+                        view
+                ),
+                new EditPetCommand(
+                        new PutPetController(sendArbitraryRequestController),
+                        view
+                ),
+                new RemovePetCommand(
+                        new DeletePetController(sendArbitraryRequestController),
                         view
                 )
         };

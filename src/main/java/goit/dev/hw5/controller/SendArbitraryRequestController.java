@@ -14,11 +14,11 @@ public class SendArbitraryRequestController implements Controller {
         this.serverUrl = serverUrl;
     }
 
-    @Override
-    public ResponseWrapper sendPost(String request, byte[] bodyData) throws IOException {
+    // Add contentType argument ?
+    public ResponseWrapper sendWithBody (String request, byte[] bodyData, String method) throws IOException {
         URL url = new URL(serverUrl + "/" + request);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
+        connection.setRequestMethod(method);
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
 
@@ -30,11 +30,17 @@ public class SendArbitraryRequestController implements Controller {
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
 
-        if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
+        responseWrapper.setBody(getResponseAsString(connection));
+        /*if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
             responseWrapper.setBody(getResponseAsString(connection));
-        }
+        }*/
 
         return responseWrapper;
+    }
+
+    @Override
+    public ResponseWrapper sendPost(String request, byte[] bodyData) throws IOException {
+        return sendWithBody(request, bodyData, "POST");
     }
     public ResponseWrapper sendPost(String request, String bodyString) throws IOException {
         return sendPost(request, bodyString.getBytes());    // Encoding?
@@ -43,19 +49,36 @@ public class SendArbitraryRequestController implements Controller {
         return sendPost(request, Files.readAllBytes(bodyFile.toPath()));
     }
 
-    @Override
-    public ResponseWrapper sendGet(String request) throws IOException {
+    public ResponseWrapper sendPut (String request, byte[] bodyData) throws IOException {
+        return sendWithBody(request, bodyData, "PUT");
+    }
+
+    public ResponseWrapper send (String request, String method) throws IOException {
         URL url = new URL(String .format("%1$s/%2$s", serverUrl, request)); // MalformedURLException
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();    // IOException
-        connection.setRequestMethod("GET"); // ProtocolException
+        connection.setRequestMethod(method); // ProtocolException
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
 
-        if (responseCode == HttpURLConnection.HTTP_OK) {
+        responseWrapper.setBody(getResponseAsString(connection));
+        /*if (responseCode == HttpURLConnection.HTTP_OK) {
             responseWrapper.setBody(getResponseAsString(connection));
-        }
+        }*/
 
         return responseWrapper;
+    }
+
+    @Override
+    public ResponseWrapper sendGet(String request) throws IOException {
+        return send(request, "GET");
+    }
+
+    public ResponseWrapper sendDelete(String request) throws IOException {
+        URL url = new URL(String .format("%1$s/%2$s", serverUrl, request)); // MalformedURLException
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();    // IOException
+        connection.setRequestMethod("DELETE"); // ProtocolException
+        int responseCode = connection.getResponseCode();
+        return new ResponseWrapper(responseCode);    // IOException
     }
 
     private String getResponseAsString(HttpURLConnection connection) throws IOException {
