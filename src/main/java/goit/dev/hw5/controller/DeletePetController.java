@@ -4,7 +4,7 @@ import goit.dev.hw5.ResponseWrapper;
 
 import java.io.IOException;
 
-public class DeletePetController implements IdGetController {
+public class DeletePetController implements IdController {
     private SendArbitraryRequestController controller;
 
     public DeletePetController(SendArbitraryRequestController controller) {
@@ -12,7 +12,7 @@ public class DeletePetController implements IdGetController {
     }
 
     @Override
-    public ResponseWrapper get(long id) throws IOException {
+    public ResponseWrapper send(long id) throws IOException {
         return controller.sendDelete("pet/" + id);
     }
 }

@@ -1,7 +1,7 @@
 package goit.dev.hw5.ui.commands;
 
 import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.StringGetController;
+import goit.dev.hw5.controller.StringController;
 import goit.dev.hw5.ui.View;
 
 import java.io.IOException;
@@ -10,10 +10,10 @@ public class GetPetByStatusCommand implements Command {
     public static final String NAME = "get pet(s)";
     public static final String DESC = "Get pet by status";
 
-    private StringGetController controller;
+    private StringController controller;
     private View view;
 
-    public GetPetByStatusCommand(StringGetController controller, View view) {
+    public GetPetByStatusCommand(StringController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -27,7 +27,7 @@ public class GetPetByStatusCommand implements Command {
     public void execute() throws IOException {
         view.write("Enter status");
         String petStatus = view.read();
-        ResponseWrapper response = controller.get(petStatus);
+        ResponseWrapper response = controller.send(petStatus);
         view.write(response.getBody());
     }
 

@@ -4,7 +4,7 @@ import goit.dev.hw5.ResponseWrapper;
 
 import java.io.IOException;
 
-public class PutPetController implements BodyPostController{
+public class PutPetController implements BodyController {
     private SendArbitraryRequestController controller;
 
     public PutPetController(SendArbitraryRequestController controller) {
@@ -12,7 +12,7 @@ public class PutPetController implements BodyPostController{
     }
 
     @Override
-    public ResponseWrapper post(String body) throws IOException {
+    public ResponseWrapper send(String body) throws IOException {
         return controller.sendPut("put", body.getBytes());
     }
 }

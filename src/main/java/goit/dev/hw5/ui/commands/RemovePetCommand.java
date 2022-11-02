@@ -1,11 +1,7 @@
 package goit.dev.hw5.ui.commands;
 
-import com.google.gson.Gson;
 import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.IdGetController;
-import goit.dev.hw5.model.Category;
-import goit.dev.hw5.model.Pet;
-import goit.dev.hw5.model.Tag;
+import goit.dev.hw5.controller.IdController;
 import goit.dev.hw5.ui.View;
 
 import java.io.IOException;
@@ -14,10 +10,10 @@ public class RemovePetCommand implements Command {
     public static final String NAME = "remove pet";
     public static final String DESC = "Send delete pet request";
 
-    private IdGetController controller;
+    private IdController controller;
     private View view;
 
-    public RemovePetCommand(IdGetController controller, View view) {
+    public RemovePetCommand(IdController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -31,7 +27,7 @@ public class RemovePetCommand implements Command {
     public void execute() throws IOException {
         view.write("Enter id");
         Long petId = Long.parseLong(view.read());
-        ResponseWrapper response = controller.get(petId);
+        ResponseWrapper response = controller.send(petId);
         view.write("Status: " + response.getStatus());
         view.write(response.getBody());
     }

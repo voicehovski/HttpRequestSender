@@ -2,7 +2,7 @@ package goit.dev.hw5.ui.commands;
 
 import com.google.gson.Gson;
 import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.BodyPostController;
+import goit.dev.hw5.controller.BodyController;
 import goit.dev.hw5.model.Category;
 import goit.dev.hw5.model.Pet;
 import goit.dev.hw5.model.Tag;
@@ -14,10 +14,10 @@ public class EditPetCommand implements Command{
     public static final String NAME = "edit pet";
     public static final String DESC = "Send update pet request";
 
-    private BodyPostController controller;
+    private BodyController controller;
     private View view;
 
-    public EditPetCommand(BodyPostController controller, View view) {
+    public EditPetCommand(BodyController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -42,7 +42,7 @@ public class EditPetCommand implements Command{
         view.write("Enter tag name");
         newPet.addTag(new Tag(view.read()));
         String json = (new Gson()).toJson(newPet);
-        ResponseWrapper response = controller.post(json);
+        ResponseWrapper response = controller.send(json);
         view.write("Status: " + response.getStatus());
         view.write(response.getBody());
     }

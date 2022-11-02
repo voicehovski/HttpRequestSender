@@ -4,14 +4,14 @@ import goit.dev.hw5.ResponseWrapper;
 
 import java.io.IOException;
 
-public class GetPetByStatusController implements StringGetController {
+public class GetPetByStatusController implements StringController {
     private SendArbitraryRequestController controller;
 
     public GetPetByStatusController(SendArbitraryRequestController controller) {
         this.controller = controller;
     }
 
-    public ResponseWrapper get (String status) throws IOException {
+    public ResponseWrapper send(String status) throws IOException {
         return controller.sendGet("pet/findByStatus?status=" + status);
     }
 }
