@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    //implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
     //implementation 'org.postgresql:postgresql:42.4.1'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'

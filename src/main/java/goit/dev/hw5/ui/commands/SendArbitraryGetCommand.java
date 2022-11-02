@@ -1,6 +1,6 @@
 package goit.dev.hw5.ui.commands;
 
-import goit.dev.hw5.Controller;
+import goit.dev.hw5.controller.Controller;
 import goit.dev.hw5.ResponseWrapper;
 import goit.dev.hw5.ui.View;
 

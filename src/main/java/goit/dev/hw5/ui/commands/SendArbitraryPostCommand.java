@@ -1,9 +1,10 @@
 package goit.dev.hw5.ui.commands;
 
-import goit.dev.hw5.Controller;
+import goit.dev.hw5.controller.Controller;
 import goit.dev.hw5.ResponseWrapper;
 import goit.dev.hw5.ui.View;
 
+import java.io.File;
 import java.io.IOException;
 
 public class SendArbitraryPostCommand implements Command{
@@ -29,7 +30,7 @@ public class SendArbitraryPostCommand implements Command{
         String request = view.read();
         view.write("Enter a filename");
         String filename = view.read();
-        ResponseWrapper response = controller.sendPost(request,filename);
+        ResponseWrapper response = controller.sendPostFromJson(request,new File("src/main/resources/" + filename));
         view.write(response.getBody());
     }
 

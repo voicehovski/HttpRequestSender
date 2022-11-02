@@ -1,4 +1,6 @@
-package goit.dev.hw5;
+package goit.dev.hw5.controller;
+
+import goit.dev.hw5.ResponseWrapper;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -12,25 +14,33 @@ public class SendArbitraryRequestController implements Controller {
         this.serverUrl = serverUrl;
     }
 
-    public ResponseWrapper sendPost(String request, String filename) throws IOException {
+    @Override
+    public ResponseWrapper sendPost(String request, byte[] bodyData) throws IOException {
         URL url = new URL(serverUrl + "/" + request);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("POST");
         connection.setDoOutput(true);
+        connection.setRequestProperty("Content-Type", "application/json");
 
         OutputStream os = connection.getOutputStream();
-        os.write(Files.readAllBytes(new File("src/main/resources/" + filename).toPath()));
+        os.write(bodyData);
         os.flush();
         os.close();
 
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
 
-        if (responseCode == HttpURLConnection.HTTP_CREATED) {
+        if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
             responseWrapper.setBody(getResponseAsString(connection));
         }
 
         return responseWrapper;
+    }
+    public ResponseWrapper sendPost(String request, String bodyString) throws IOException {
+        return sendPost(request, bodyString.getBytes());    // Encoding?
+    }
+    public ResponseWrapper sendPostFromJson (String request, File bodyFile) throws IOException {
+        return sendPost(request, Files.readAllBytes(bodyFile.toPath()));
     }
 
     @Override
