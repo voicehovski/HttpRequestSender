@@ -2,9 +2,17 @@ package goit.dev.hw5;
 
 import goit.dev.hw5.controller.*;
 import goit.dev.hw5.controller.pet.*;
+import goit.dev.hw5.controller.store.DeleteOrderController;
+import goit.dev.hw5.controller.store.GetAdditionalPropertiesController;
+import goit.dev.hw5.controller.store.GetOrderController;
+import goit.dev.hw5.controller.store.PostOrderController;
 import goit.dev.hw5.ui.*;
 import goit.dev.hw5.ui.commands.*;
 import goit.dev.hw5.ui.commands.pet.*;
+import goit.dev.hw5.ui.commands.store.CreateOrderCommand;
+import goit.dev.hw5.ui.commands.store.GetInventoryCommand;
+import goit.dev.hw5.ui.commands.store.GetOrderCommand;
+import goit.dev.hw5.ui.commands.store.RemoveOrderCommand;
 
 public class Main {
     public static final String SERVER_URL = "https://petstore.swagger.io/v2";
@@ -42,6 +50,23 @@ public class Main {
                 ),
                 new RemovePetCommand(
                         new DeletePetController(sendArbitraryRequestController),
+                        view
+                ),
+                new CreateOrderCommand(
+                        new PostOrderController(sendArbitraryRequestController),
+                        view
+                ),
+
+                new GetOrderCommand(
+                        new GetOrderController(sendArbitraryRequestController),
+                        view
+                ),
+                new RemoveOrderCommand(
+                        new DeleteOrderController(sendArbitraryRequestController),
+                        view
+                ),
+                new GetInventoryCommand(
+                        new GetAdditionalPropertiesController(sendArbitraryRequestController),
                         view
                 )
         };

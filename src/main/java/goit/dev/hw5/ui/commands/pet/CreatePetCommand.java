@@ -68,6 +68,4 @@ public class CreatePetCommand implements Command {
     public String getDesc() {
         return DESC;
     }
-
-
 }
