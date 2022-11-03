@@ -1,8 +1,10 @@
 package goit.dev.hw5;
 
 import goit.dev.hw5.controller.*;
+import goit.dev.hw5.controller.pet.*;
 import goit.dev.hw5.ui.*;
 import goit.dev.hw5.ui.commands.*;
+import goit.dev.hw5.ui.commands.pet.*;
 
 public class Main {
     public static final String SERVER_URL = "https://petstore.swagger.io/v2";
@@ -31,7 +33,7 @@ public class Main {
                         view
                 ),
                 new GetPetByStatusCommand(
-                        new GetPetByStatusController (sendArbitraryRequestController),
+                        new GetPetByStatusController(sendArbitraryRequestController),
                         view
                 ),
                 new EditPetCommand(

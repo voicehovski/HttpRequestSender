@@ -1,6 +1,8 @@
-package goit.dev.hw5.controller;
+package goit.dev.hw5.controller.pet;
 
 import goit.dev.hw5.ResponseWrapper;
+import goit.dev.hw5.controller.IdController;
+import goit.dev.hw5.controller.SendArbitraryRequestController;
 
 import java.io.IOException;
 

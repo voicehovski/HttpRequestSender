@@ -1,8 +1,9 @@
-package goit.dev.hw5.ui.commands;
+package goit.dev.hw5.ui.commands.pet;
 
 import goit.dev.hw5.ResponseWrapper;
 import goit.dev.hw5.controller.IdController;
 import goit.dev.hw5.ui.View;
+import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
 

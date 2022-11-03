@@ -1,4 +1,4 @@
-package goit.dev.hw5.ui.commands;
+package goit.dev.hw5.ui.commands.pet;
 
 import com.google.gson.Gson;
 import goit.dev.hw5.ResponseWrapper;
@@ -7,6 +7,7 @@ import goit.dev.hw5.model.Category;
 import goit.dev.hw5.model.Pet;
 import goit.dev.hw5.model.Tag;
 import goit.dev.hw5.ui.View;
+import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
 import java.util.Arrays;
