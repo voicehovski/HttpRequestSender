@@ -27,6 +27,10 @@ public class Pet {
         this.status = status;
     }
 
+    public void setTags(Tag[] tags) {
+        this.tags = tags;
+    }
+
     public void addTag (Tag tag) {
         /*if (tags == null) {
             tags = new LinkedList<Tag>

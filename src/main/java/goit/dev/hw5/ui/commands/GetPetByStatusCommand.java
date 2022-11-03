@@ -25,7 +25,7 @@ public class GetPetByStatusCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        view.write("Enter status");
+        view.write("Enter a status");
         String petStatus = view.read();
         ResponseWrapper response = controller.send(petStatus);
         view.write(response.getBody());

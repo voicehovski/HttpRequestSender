@@ -19,4 +19,19 @@ public class DefaultView implements View {
     public void write(Number message) {
         System.out.println(message);
     }
+
+    @Override
+    public String enterParameter(String message, String defaultValue){
+        write(String.format("%s(%s):", message, defaultValue));
+        String value = read();
+        if (value.isBlank()) {
+            return defaultValue;
+        }
+        return value;
+    }
+    @Override
+    public String enterParameter(String message){
+        write(String.format("%s:", message));
+        return read();
+    }
 }

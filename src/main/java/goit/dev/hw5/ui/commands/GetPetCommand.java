@@ -25,7 +25,7 @@ public class GetPetCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        view.write("Enter id");
+        view.write("Enter an id");
         Long petId = Long.parseLong(view.read());
         ResponseWrapper response = controller.send(petId);
         view.write(response.getBody());

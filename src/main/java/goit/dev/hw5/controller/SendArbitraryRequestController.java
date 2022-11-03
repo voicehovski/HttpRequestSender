@@ -30,7 +30,12 @@ public class SendArbitraryRequestController implements Controller {
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
 
-        responseWrapper.setBody(getResponseAsString(connection));
+        // todo return connection
+        try{
+            responseWrapper.setBody(getResponseAsString(connection));
+        }catch(FileNotFoundException e){
+
+        }
         /*if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
             responseWrapper.setBody(getResponseAsString(connection));
         }*/

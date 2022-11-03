@@ -9,6 +9,7 @@ import goit.dev.hw5.model.Tag;
 import goit.dev.hw5.ui.View;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class EditPetCommand implements Command{
     public static final String NAME = "edit pet";
@@ -29,20 +30,31 @@ public class EditPetCommand implements Command{
 
     @Override
     public void execute() throws IOException {
-        view.write("Enter a name");
-        String petName = view.read();
-        view.write("Enter a status");
-        String petStatus = view.read();
-        view.write("Enter comma separated image paths");
-        String [] images = view.read().split(",");
-        Pet newPet = new Pet(petName, images);
-        newPet.setStatus(petStatus);
-        view.write("Enter category name");
-        newPet.setCategory(new Category(view.read()));
-        view.write("Enter tag name");
-        newPet.addTag(new Tag(view.read()));
+        view.write("Enter each value or just press <Enter> to leave current value (in braces)");
+        String id = view.enterParameter("Enter an id");
+        String name = view.enterParameter("Enter a name", "Current name");
+        String images = view.enterParameter("Enter a comma separated images", "current1.jpg,current2.jpg");
+        String status = view.enterParameter("Enter a status", "Current status");
+        String category = view.enterParameter("Enter a category", "Current category");
+        String tags = view.enterParameter("Enter a comma separated tags", "current1,current2");
+
+        Pet newPet = new Pet(
+                name,
+                Arrays.stream(images.split(","))
+                        .map(String::trim)
+                        .toArray(String[]::new)
+        );
+        newPet.setId(Long.parseLong(id));
+        newPet.setStatus(status);
+        newPet.setCategory(new Category(category));
+        newPet.setTags(Arrays.stream(tags.split(","))
+                .map(String::trim)
+                .map(Tag::new)
+                .toArray(Tag[]::new));
+
         String json = (new Gson()).toJson(newPet);
         ResponseWrapper response = controller.send(json);
+
         view.write("Status: " + response.getStatus());
         view.write(response.getBody());
     }
