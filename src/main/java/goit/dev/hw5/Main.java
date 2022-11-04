@@ -6,6 +6,7 @@ import goit.dev.hw5.controller.store.DeleteOrderController;
 import goit.dev.hw5.controller.store.GetAdditionalPropertiesController;
 import goit.dev.hw5.controller.store.GetOrderController;
 import goit.dev.hw5.controller.store.PostOrderController;
+import goit.dev.hw5.controller.user.*;
 import goit.dev.hw5.ui.*;
 import goit.dev.hw5.ui.commands.*;
 import goit.dev.hw5.ui.commands.pet.*;
@@ -13,6 +14,7 @@ import goit.dev.hw5.ui.commands.store.CreateOrderCommand;
 import goit.dev.hw5.ui.commands.store.GetInventoryCommand;
 import goit.dev.hw5.ui.commands.store.GetOrderCommand;
 import goit.dev.hw5.ui.commands.store.RemoveOrderCommand;
+import goit.dev.hw5.ui.commands.user.*;
 
 public class Main {
     public static final String SERVER_URL = "https://petstore.swagger.io/v2";
@@ -67,6 +69,38 @@ public class Main {
                 ),
                 new GetInventoryCommand(
                         new GetAdditionalPropertiesController(sendArbitraryRequestController),
+                        view
+                ),
+                new CreateUserCommand(
+                        new PostUserController(sendArbitraryRequestController),
+                        view
+                ),
+                new CreateUsersCommand(
+                        new PostUsersController(sendArbitraryRequestController),
+                        view
+                ),
+                new GetUserCommand(
+                        new GetUserController(sendArbitraryRequestController),
+                        view
+                ),
+                new EditUserCommand(
+                        new PutUserController(sendArbitraryRequestController),
+                        view
+                ),
+                new RemoveUserCommand(
+                        new DeleteUserController(sendArbitraryRequestController),
+                        view
+                ),
+                new LoginUserCommand(
+                        new LoginUserController(sendArbitraryRequestController),
+                        view
+                ),
+                new LogoutUserCommand(
+                        new LogoutUserController(sendArbitraryRequestController),
+                        view
+                ),
+                new UploadImagePetCommand(
+                        new PostFilePetController(SERVER_URL),
                         view
                 )
         };

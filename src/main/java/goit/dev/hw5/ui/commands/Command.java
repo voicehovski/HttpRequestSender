@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public interface Command {
     boolean canExecute(String command);
-    void execute() throws IOException;
+    void execute() throws IOException, InterruptedException;
     String getName();
     String getDesc();
 }

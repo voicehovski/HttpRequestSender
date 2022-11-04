@@ -7,16 +7,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.file.Files;
 
-public class SendArbitraryRequestController implements Controller {
+public class SendArbitraryRequestController {
     private String serverUrl;
 
     public SendArbitraryRequestController(String serverUrl) {
         this.serverUrl = serverUrl;
     }
 
-    @Override
     public ResponseWrapper sendPost(String request, byte[] bodyData) throws IOException {
-        HttpURLConnection connection = sendRequestWithBody(request, bodyData, "POST");
+        HttpURLConnection connection = prepareConnectionWithBody(request, bodyData, "POST");
         int responseCode = connection.getResponseCode();
         //if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
@@ -33,7 +32,7 @@ public class SendArbitraryRequestController implements Controller {
     }
 
     public ResponseWrapper sendPut (String request, byte[] bodyData) throws IOException {
-        HttpURLConnection connection = sendRequestWithBody(request, bodyData, "PUT");
+        HttpURLConnection connection = prepareConnectionWithBody(request, bodyData, "PUT");
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
         return responseWrapper;
@@ -41,12 +40,17 @@ public class SendArbitraryRequestController implements Controller {
         //return sendWithBody(request, bodyData, "PUT");
     }
 
-    @Override
     public ResponseWrapper sendGet(String request) throws IOException {
-        HttpURLConnection connection = sendRequest(request, "GET");
+        HttpURLConnection connection = prepareConnection(request, "GET");
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
-        responseWrapper.setBody(getResponseAsString(connection));
+
+        try {
+            responseWrapper.setBody(getResponseAsString(connection));
+        } catch (FileNotFoundException fnfe) {
+
+        }
+
         //if (responseCode == HttpURLConnection.HTTP_OK) {
         return responseWrapper;
 
@@ -54,19 +58,19 @@ public class SendArbitraryRequestController implements Controller {
     }
 
     public ResponseWrapper sendDelete(String request) throws IOException {
-        HttpURLConnection connection = sendRequest(request, "DELETE");
+        HttpURLConnection connection = prepareConnection(request, "DELETE");
         int responseCode = connection.getResponseCode();
         return new ResponseWrapper(responseCode);    // IOException
     }
 
-    private HttpURLConnection sendRequest(String request, String method) throws IOException {
+    private HttpURLConnection prepareConnection(String request, String method) throws IOException {
         URL url = new URL(String.format("%1$s/%2$s", serverUrl, request)); // MalformedURLException
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();    // IOException
         connection.setRequestMethod(method); // ProtocolException
         return connection;
     }
 
-    private HttpURLConnection sendRequestWithBody(
+    private HttpURLConnection prepareConnectionWithBody(
             String request,
             byte[] bodyData,
             String method

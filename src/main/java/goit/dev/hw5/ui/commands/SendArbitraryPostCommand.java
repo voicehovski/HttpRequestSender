@@ -1,7 +1,7 @@
 package goit.dev.hw5.ui.commands;
 
-import goit.dev.hw5.controller.Controller;
 import goit.dev.hw5.ResponseWrapper;
+import goit.dev.hw5.controller.SendArbitraryRequestController;
 import goit.dev.hw5.ui.View;
 
 import java.io.File;
@@ -11,10 +11,10 @@ public class SendArbitraryPostCommand implements Command{
     public static final String NAME = "post";
     public static final String DESC = "Sends arbitrary post request";
 
-    private Controller controller;
+    private SendArbitraryRequestController controller;
     private View view;
 
-    public SendArbitraryPostCommand(Controller controller, View view) {
+    public SendArbitraryPostCommand(SendArbitraryRequestController controller, View view) {
         this .controller = controller;
         this.view = view;
     }

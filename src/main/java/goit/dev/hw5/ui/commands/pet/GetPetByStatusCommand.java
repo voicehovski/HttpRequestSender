@@ -29,6 +29,8 @@ public class GetPetByStatusCommand implements Command {
         view.write("Enter a status");
         String petStatus = view.read();
         ResponseWrapper response = controller.send(petStatus);
+
+        view.write("Status: " + response.getStatus());
         view.write(response.getBody());
     }
 

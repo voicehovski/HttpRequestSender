@@ -1,21 +1,21 @@
-package goit.dev.hw5.ui.commands.store;
+package goit.dev.hw5.ui.commands.user;
 
 import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.IdController;
 import goit.dev.hw5.controller.NoParametersController;
+import goit.dev.hw5.controller.TwoStringController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
 
-public class GetInventoryCommand implements Command {
-    public static final String NAME = "get inventory";
-    public static final String DESC = "Get available inventory";
+public class LogoutUserCommand implements Command {
+    public static final String NAME = "logout";
+    public static final String DESC = "Logs current user out";
 
     private NoParametersController controller;
     private View view;
 
-    public GetInventoryCommand(NoParametersController controller, View view) {
+    public LogoutUserCommand(NoParametersController controller, View view) {
         this .controller = controller;
         this.view = view;
     }

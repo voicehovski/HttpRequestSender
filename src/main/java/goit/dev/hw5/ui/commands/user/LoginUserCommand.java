@@ -1,21 +1,21 @@
-package goit.dev.hw5.ui.commands.store;
+package goit.dev.hw5.ui.commands.user;
 
 import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.IdController;
-import goit.dev.hw5.controller.NoParametersController;
+import goit.dev.hw5.controller.StringController;
+import goit.dev.hw5.controller.TwoStringController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
 
-public class GetInventoryCommand implements Command {
-    public static final String NAME = "get inventory";
-    public static final String DESC = "Get available inventory";
+public class LoginUserCommand implements Command {
+    public static final String NAME = "login";
+    public static final String DESC = "Logs user in";
 
-    private NoParametersController controller;
+    private TwoStringController controller;
     private View view;
 
-    public GetInventoryCommand(NoParametersController controller, View view) {
+    public LoginUserCommand(TwoStringController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -27,7 +27,11 @@ public class GetInventoryCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        ResponseWrapper response = controller.send();
+        view.write("Enter user name");
+        String name = view.read();
+        view.write("Enter user password");
+        String password = view.read();
+        ResponseWrapper response = controller.send(name, password);
 
         view.write("Status: " + response.getStatus());
         view.write(response.getBody());

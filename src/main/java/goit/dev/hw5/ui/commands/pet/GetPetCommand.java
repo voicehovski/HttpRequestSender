@@ -29,6 +29,8 @@ public class GetPetCommand implements Command {
         view.write("Enter an id");
         Long petId = Long.parseLong(view.read());
         ResponseWrapper response = controller.send(petId);
+
+        view.write("Status: " + response.getStatus());
         view.write(response.getBody());
     }
 
