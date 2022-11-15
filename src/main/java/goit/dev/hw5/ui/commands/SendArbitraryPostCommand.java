@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class SendArbitraryPostCommand implements Command{
     public static final String NAME = "post";
-    public static final String DESC = "Sends arbitrary post request";
+    public static final String DESC = "Send arbitrary post request";
 
     private SendArbitraryRequestController controller;
     private View view;

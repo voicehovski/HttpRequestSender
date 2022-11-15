@@ -20,4 +20,9 @@ public class Order {
     public Order(long petId, int quantity, String shipDate, String status, boolean complete) {
         this(-1, petId, quantity, shipDate, status, complete);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d]: pet[%d]x%d on %s, status:%s/%s", id, petId, quantity, shipDate, status, complete);
+    }
 }

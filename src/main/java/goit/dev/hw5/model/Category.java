@@ -12,4 +12,9 @@ public class Category {
     public Category(String name) {
         this(0, name);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d] %s", id, name);
+    }
 }

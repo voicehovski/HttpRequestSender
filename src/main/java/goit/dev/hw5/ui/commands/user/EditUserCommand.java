@@ -1,23 +1,21 @@
 package goit.dev.hw5.ui.commands.user;
 
-import com.google.gson.Gson;
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.BodyController;
-import goit.dev.hw5.controller.StringParamBodyController;
+import goit.dev.hw5.controller.user.PutUserController;
 import goit.dev.hw5.model.User;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class EditUserCommand implements Command {
     public static final String NAME = "edit user";
-    public static final String DESC = "Send put user request";
+    public static final String DESC = "Edit user by name (PUT)";
 
-    private StringParamBodyController controller;
+    private PutUserController controller;
     private View view;
 
-    public EditUserCommand(StringParamBodyController controller, View view) {
+    public EditUserCommand(PutUserController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -50,11 +48,10 @@ public class EditUserCommand implements Command {
                 Integer.parseInt(status)
         );
 
-        String json = (new Gson()).toJson(user);
-        ResponseWrapper response = controller.send(username, json);
+        int responseStatus = controller.send(Map.of("username", username), user);
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + responseStatus);
+        view.write(controller.getBody());
     }
 
     @Override

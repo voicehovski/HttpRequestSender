@@ -1,21 +1,20 @@
 package goit.dev.hw5.ui.commands.user;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.StringController;
-import goit.dev.hw5.controller.TwoStringController;
+import goit.dev.hw5.controller.user.LoginUserController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class LoginUserCommand implements Command {
     public static final String NAME = "login";
-    public static final String DESC = "Logs user in";
+    public static final String DESC = "Logs user in (GET)";
 
-    private TwoStringController controller;
+    private LoginUserController controller;
     private View view;
 
-    public LoginUserCommand(TwoStringController controller, View view) {
+    public LoginUserCommand(LoginUserController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -31,10 +30,10 @@ public class LoginUserCommand implements Command {
         String name = view.read();
         view.write("Enter user password");
         String password = view.read();
-        ResponseWrapper response = controller.send(name, password);
+        int status = controller.send(Map.of("username", name, "password", password));
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + status);
+        view.write(controller.getBody());
     }
 
     @Override

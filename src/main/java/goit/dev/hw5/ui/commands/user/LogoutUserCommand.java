@@ -1,21 +1,20 @@
 package goit.dev.hw5.ui.commands.user;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.NoParametersController;
-import goit.dev.hw5.controller.TwoStringController;
+import goit.dev.hw5.controller.user.LogoutUserController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Collections;
 
 public class LogoutUserCommand implements Command {
     public static final String NAME = "logout";
-    public static final String DESC = "Logs current user out";
+    public static final String DESC = "Logs current user out (GET)";
 
-    private NoParametersController controller;
+    private LogoutUserController controller;
     private View view;
 
-    public LogoutUserCommand(NoParametersController controller, View view) {
+    public LogoutUserCommand(LogoutUserController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -27,10 +26,10 @@ public class LogoutUserCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        ResponseWrapper response = controller.send();
+        int status = controller.send(Collections.emptyMap());
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + status);
+        view.write(controller.getBody());
     }
 
     @Override

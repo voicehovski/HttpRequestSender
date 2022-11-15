@@ -1,20 +1,20 @@
 package goit.dev.hw5.ui.commands.user;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.StringController;
+import goit.dev.hw5.controller.user.GetUserController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class GetUserCommand implements Command {
     public static final String NAME = "get user";
-    public static final String DESC = "Get user by name";
+    public static final String DESC = "Get user by name (GET)";
 
-    private StringController controller;
+    private GetUserController controller;
     private View view;
 
-    public GetUserCommand(StringController controller, View view) {
+    public GetUserCommand(GetUserController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -26,12 +26,12 @@ public class GetUserCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        view.write("Enter a name");
+        view.write("Enter name");
         String name = view.read();
-        ResponseWrapper response = controller.send(name);
+        int status = controller.send(Map.of("username", name));
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + status);
+        view.write(controller.getEntity());
     }
 
     @Override

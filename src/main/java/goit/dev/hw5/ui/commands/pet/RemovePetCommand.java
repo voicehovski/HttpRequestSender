@@ -1,20 +1,20 @@
 package goit.dev.hw5.ui.commands.pet;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.IdController;
+import goit.dev.hw5.controller.pet.DeletePetController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class RemovePetCommand implements Command {
     public static final String NAME = "remove pet";
-    public static final String DESC = "Send delete pet request";
+    public static final String DESC = "Remove pet by id (DELETE)";
 
-    private IdController controller;
+    private DeletePetController controller;
     private View view;
 
-    public RemovePetCommand(IdController controller, View view) {
+    public RemovePetCommand(DeletePetController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -28,10 +28,9 @@ public class RemovePetCommand implements Command {
     public void execute() throws IOException {
         view.write("Enter an id");
         Long petId = Long.parseLong(view.read());
-        ResponseWrapper response = controller.send(petId);
+        int responseStatus = controller.send(Map.of("id", petId.toString()));
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + responseStatus);
     }
 
     @Override

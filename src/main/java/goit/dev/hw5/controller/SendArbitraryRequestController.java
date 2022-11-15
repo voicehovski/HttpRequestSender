@@ -19,7 +19,11 @@ public class SendArbitraryRequestController {
         int responseCode = connection.getResponseCode();
         //if (responseCode == HttpURLConnection.HTTP_CREATED || responseCode == HttpURLConnection.HTTP_OK) {
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
-        responseWrapper.setBody(getResponseAsString(connection));
+        try {
+            responseWrapper.setBody(getResponseAsString(connection.getInputStream()));
+        } catch (FileNotFoundException fnfe) {
+
+        }
         return responseWrapper;
 
         //return sendWithBody(request, bodyData, "POST");
@@ -35,6 +39,11 @@ public class SendArbitraryRequestController {
         HttpURLConnection connection = prepareConnectionWithBody(request, bodyData, "PUT");
         int responseCode = connection.getResponseCode();
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
+        try {
+            responseWrapper.setBody(getResponseAsString(connection.getInputStream()));
+        } catch (FileNotFoundException fnfe) {
+
+        }
         return responseWrapper;
 
         //return sendWithBody(request, bodyData, "PUT");
@@ -46,7 +55,7 @@ public class SendArbitraryRequestController {
         ResponseWrapper responseWrapper = new ResponseWrapper(responseCode);    // IOException
 
         try {
-            responseWrapper.setBody(getResponseAsString(connection));
+            responseWrapper.setBody(getResponseAsString(connection.getInputStream()));
         } catch (FileNotFoundException fnfe) {
 
         }
@@ -89,10 +98,10 @@ public class SendArbitraryRequestController {
         return connection;
     }
 
-    private String getResponseAsString(HttpURLConnection connection) throws IOException {
+    private String getResponseAsString(InputStream stream) throws IOException {
         BufferedReader in =
                 new BufferedReader(
-                        new InputStreamReader(connection.getInputStream()));    // IOException
+                        new InputStreamReader(stream));    // IOException
         String inputLine;
         StringBuffer response = new StringBuffer();
         while ((inputLine = in.readLine()) != null) {   // IOException

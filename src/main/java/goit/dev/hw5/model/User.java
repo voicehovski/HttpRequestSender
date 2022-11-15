@@ -24,4 +24,9 @@ public class User {
     public User (String username, String firstName, String lastName, String email, String password, String phone, int userStatus){
         this(-1, username, firstName, lastName, email, password, phone, userStatus);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d] %s(%s %s), %s, %s, status:%s", id, username, firstName, lastName, email, phone, userStatus);
+    }
 }

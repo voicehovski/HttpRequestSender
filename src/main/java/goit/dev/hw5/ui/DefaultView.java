@@ -11,12 +11,7 @@ public class DefaultView implements View {
     }
 
     @Override
-    public void write(String message) {
-        System.out.println(message);
-    }
-
-    @Override
-    public void write(Number message) {
+    public void write(Object message) {
         System.out.println(message);
     }
 

@@ -44,4 +44,9 @@ public class Pet {
             tags = newTags;
         }
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d] %s from %s, images:(%s), tags:(%s), status:%s", id, name, category, photoUrls, tags, status);
+    }
 }

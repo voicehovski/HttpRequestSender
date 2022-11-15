@@ -1,20 +1,20 @@
 package goit.dev.hw5.ui.commands.store;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.IdController;
+import goit.dev.hw5.controller.store.GetOrderController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class GetOrderCommand implements Command {
     public static final String NAME = "get order";
-    public static final String DESC = "Get order by id";
+    public static final String DESC = "Get order by id (GET)";
 
-    private IdController controller;
+    private GetOrderController controller;
     private View view;
 
-    public GetOrderCommand(IdController controller, View view) {
+    public GetOrderCommand(GetOrderController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -26,12 +26,12 @@ public class GetOrderCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        view.write("Enter an id");
+        view.write("Enter id");
         Long petId = Long.parseLong(view.read());
-        ResponseWrapper response = controller.send(petId);
+        int status = controller.send(Map.of("id", petId.toString()));
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + status);
+        view.write(controller.getEntity());
     }
 
     @Override

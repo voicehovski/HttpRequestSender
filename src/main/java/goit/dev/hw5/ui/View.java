@@ -2,8 +2,7 @@ package goit.dev.hw5.ui;
 
 public interface View {
     String read ();
-    void write(String message);
-    void write(Number message);
+    void write(Object message);
 
     String enterParameter(String message, String defaultValue);
 

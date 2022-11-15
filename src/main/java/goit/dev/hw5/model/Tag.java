@@ -12,4 +12,9 @@ public class Tag {
     public Tag(String name) {
         this(0, name);
     }
+
+    @Override
+    public String toString() {
+        return String.format("[%d] %s", id, name);
+    }
 }

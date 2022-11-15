@@ -1,26 +1,21 @@
 package goit.dev.hw5.ui.commands.store;
 
-import com.google.gson.Gson;
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.BodyController;
-import goit.dev.hw5.model.Category;
+import goit.dev.hw5.controller.store.PostOrderController;
 import goit.dev.hw5.model.Order;
-import goit.dev.hw5.model.Pet;
-import goit.dev.hw5.model.Tag;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class CreateOrderCommand implements Command {
     public static final String NAME = "create order";
-    public static final String DESC = "Send create order request";
+    public static final String DESC = "Create new order (POST)";
 
-    private BodyController controller;
+    private PostOrderController controller;
     private View view;
 
-    public CreateOrderCommand(BodyController controller, View view) {
+    public CreateOrderCommand(PostOrderController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -46,11 +41,10 @@ public class CreateOrderCommand implements Command {
            true
         );
 
-        String json = (new Gson()).toJson(order);
-        ResponseWrapper response = controller.send(json);
+        int responseStatus = controller.send(Collections.emptyMap(), order);
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + responseStatus);
+        view.write(controller.getEntity());
     }
 
     @Override

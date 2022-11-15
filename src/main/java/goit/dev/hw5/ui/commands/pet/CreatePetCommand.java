@@ -1,8 +1,6 @@
 package goit.dev.hw5.ui.commands.pet;
 
-import com.google.gson.Gson;
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.BodyController;
+import goit.dev.hw5.controller.pet.PostPetController;
 import goit.dev.hw5.model.Category;
 import goit.dev.hw5.model.Pet;
 import goit.dev.hw5.model.Tag;
@@ -11,16 +9,16 @@ import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.Collections;
 
 public class CreatePetCommand implements Command {
     public static final String NAME = "create pet";
-    public static final String DESC = "Send create pet request";
+    public static final String DESC = "Create new pet (POST)";
 
-    private BodyController controller;
+    private PostPetController controller;
     private View view;
 
-    public CreatePetCommand(BodyController controller, View view) {
+    public CreatePetCommand(PostPetController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -33,11 +31,11 @@ public class CreatePetCommand implements Command {
     @Override
     public void execute() throws IOException {
         view.write("Enter each value or just press <Enter> to leave default value (in braces)");
-        String name = view.enterParameter("Enter a name", "Mr. Pet");
-        String images = view.enterParameter("Enter a comma separated image names", "pet.jpg");
-        String status = view.enterParameter("Enter a status", "available");
-        String category = view.enterParameter("Enter a category", "pets");
-        String tags = view.enterParameter("Enter a comma separated tags", "nice");
+        String name = view.enterParameter("Enter name", "Mr. Pet");
+        String images = view.enterParameter("Enter comma separated image names", "pet.jpg");
+        String status = view.enterParameter("Enter status", "available");
+        String category = view.enterParameter("Enter category", "pets");
+        String tags = view.enterParameter("Enter comma separated tags", "nice");
 
         Pet newPet = new Pet(
                 name,
@@ -52,11 +50,9 @@ public class CreatePetCommand implements Command {
                         .map(Tag::new)
                         .toArray(Tag[]::new));
 
-        String json = (new Gson()).toJson(newPet);
-        ResponseWrapper response = controller.send(json);
-
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        int responseStatus = controller.send(Collections.emptyMap(), newPet);
+        view.write("Status: " + responseStatus);
+        view.write(controller.getEntity());
     }
 
     @Override

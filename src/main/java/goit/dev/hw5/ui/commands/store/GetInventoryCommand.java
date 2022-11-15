@@ -1,21 +1,20 @@
 package goit.dev.hw5.ui.commands.store;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.IdController;
-import goit.dev.hw5.controller.NoParametersController;
+import goit.dev.hw5.controller.store.GetAdditionalPropertiesController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Collections;
 
 public class GetInventoryCommand implements Command {
     public static final String NAME = "get inventory";
-    public static final String DESC = "Get available inventory";
+    public static final String DESC = "Get available inventory (GET)";
 
-    private NoParametersController controller;
+    private GetAdditionalPropertiesController controller;
     private View view;
 
-    public GetInventoryCommand(NoParametersController controller, View view) {
+    public GetInventoryCommand(GetAdditionalPropertiesController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -27,10 +26,10 @@ public class GetInventoryCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        ResponseWrapper response = controller.send();
+        int status = controller.send(Collections.emptyMap());
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + status);
+        view.write(controller.getBody());
     }
 
     @Override

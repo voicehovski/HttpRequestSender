@@ -1,20 +1,20 @@
 package goit.dev.hw5.ui.commands.pet;
 
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.StringController;
+import goit.dev.hw5.controller.pet.GetPetByStatusController;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class GetPetByStatusCommand implements Command {
     public static final String NAME = "get pet(s)";
-    public static final String DESC = "Get pet by status";
+    public static final String DESC = "Get pet list by status (GET)";
 
-    private StringController controller;
+    private GetPetByStatusController controller;
     private View view;
 
-    public GetPetByStatusCommand(StringController controller, View view) {
+    public GetPetByStatusCommand(GetPetByStatusController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -26,12 +26,12 @@ public class GetPetByStatusCommand implements Command {
 
     @Override
     public void execute() throws IOException {
-        view.write("Enter a status");
+        view.write("Enter status");
         String petStatus = view.read();
-        ResponseWrapper response = controller.send(petStatus);
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        int responseStatus = controller.send(Map.of("status", petStatus));
+        view.write("Status: " + responseStatus);
+        view.write(controller.getEntityList());
     }
 
     @Override

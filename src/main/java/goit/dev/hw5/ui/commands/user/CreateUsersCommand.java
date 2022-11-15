@@ -1,23 +1,22 @@
 package goit.dev.hw5.ui.commands.user;
 
-import com.google.gson.Gson;
-import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.BodyController;
+import goit.dev.hw5.controller.user.PostUsersController;
 import goit.dev.hw5.model.User;
 import goit.dev.hw5.ui.View;
 import goit.dev.hw5.ui.commands.Command;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.LinkedList;
 
 public class CreateUsersCommand implements Command {
     public static final String NAME = "create users";
-    public static final String DESC = "Send create user request for several users";
+    public static final String DESC = "Create new users (POST)";
 
-    private BodyController controller;
+    private PostUsersController controller;
     private View view;
 
-    public CreateUsersCommand(BodyController controller, View view) {
+    public CreateUsersCommand(PostUsersController controller, View view) {
         this .controller = controller;
         this.view = view;
     }
@@ -40,11 +39,10 @@ public class CreateUsersCommand implements Command {
             }
         }
 
-        String json = (new Gson()).toJson(users);
-        ResponseWrapper response = controller.send(json);
+        int status = controller.send(Collections.emptyMap(), users);
 
-        view.write("Status: " + response.getStatus());
-        view.write(response.getBody());
+        view.write("Status: " + status);
+        view.write(controller.getBody());
     }
 
     private User reqUserData () {
