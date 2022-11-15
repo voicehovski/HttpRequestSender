@@ -23,7 +23,8 @@ public class PostFilePetController {
 
         var mimeMultipartData = MimeMultipartData.newBuilder()
                 .withCharset(StandardCharsets.UTF_8)
-                .addFile("file1", file.toPath(), Files.probeContentType(file.toPath()))
+                .addText("additionalMetadata", param)
+                .addFile("file", file.toPath(), Files.probeContentType(file.toPath()))
                 .build();
 
         var request = HttpRequest.newBuilder()
