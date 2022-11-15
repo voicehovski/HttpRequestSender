@@ -2,7 +2,7 @@ package goit.dev.hw5.controller.user;
 
 import com.google.gson.Gson;
 import goit.dev.hw5.ResponseWrapper;
-import goit.dev.hw5.controller.GetRawController;
+import goit.dev.hw5.controller.DefaultGetRawController;
 import goit.dev.hw5.controller.SendArbitraryRequestController;
 import goit.dev.hw5.controller.SendEntityController;
 import goit.dev.hw5.model.User;
@@ -10,9 +10,8 @@ import goit.dev.hw5.model.User;
 import java.io.IOException;
 import java.util.Map;
 
-public class PutUserController implements SendEntityController<User>, GetRawController {
+public class PutUserController extends DefaultGetRawController implements SendEntityController<User> {
     private SendArbitraryRequestController controller;
-    private String body;
 
     public PutUserController(SendArbitraryRequestController controller) {
         this.controller = controller;
@@ -26,12 +25,7 @@ public class PutUserController implements SendEntityController<User>, GetRawCont
                 "user/" + username,
                 new Gson() .toJson(entity, User.class) .getBytes()
         );
-        body = wrapper.getBody();
+        setBody(wrapper.getBody());
         return wrapper.getStatus();
-    }
-
-    @Override
-    public String getBody() {
-        return body;
     }
 }

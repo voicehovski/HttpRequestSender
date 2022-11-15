@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 
-public class DefaultEntityController<T> implements GetEntityController {
+public class DefaultEntityController<T> implements GetEntityController, GetRawController {
     private String entityString;
     @Override
     public T getEntity() {
@@ -22,11 +22,13 @@ public class DefaultEntityController<T> implements GetEntityController {
         }
     }
 
-    public String getEntityAsString () {
+    @Override
+    public String getBody() {
         return entityString;
     }
 
-    protected void setEntityString(String s) {
-        entityString = s;
+    @Override
+    public void setBody(String body) {
+        entityString = body;
     }
 }
